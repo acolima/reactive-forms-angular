@@ -1,0 +1,83 @@
+<mat-card>
+  <mat-card-title>Formulário</mat-card-title>
+
+  <mat-card-content>
+    <form [formGroup]="clientForm" (ngSubmit)="addEmployee()">
+      <mat-form-field>
+        <input
+          matInput
+          value=""
+          type="text"
+          placeholder="Nome"
+          formControlName="name"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          matInput
+          value=""
+          type="text"
+          placeholder="Endereço"
+          formControlName="address"
+        />
+      </mat-form-field>
+
+      <div formArrayName="phones" class="phones">
+        <mat-form-field *ngFor="let c of phones.controls; let i = index">
+          <input
+            matInput
+            value=""
+            type="text"
+            placeholder="Phone"
+            [formControlName]="i"
+          />
+        </mat-form-field>
+
+        <button mat-button type="button" (click)="addPhone()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+      <div formArrayName="dependents">
+        <button
+          mat-raised-button
+          type="button"
+          color="primary"
+          (click)="addChild()"
+        >
+          Adicionar dependente
+        </button>
+        <ng-container *ngFor="let c of dependents.controls; let i = index">
+          <div class="dependents" [formGroupName]="i">
+            <mat-form-field>
+              <input
+                matInput
+                value=""
+                type="text"
+                placeholder="Nome do dependente"
+                formControlName="name"
+              />
+            </mat-form-field>
+            <mat-form-field>
+              <input
+                matInput
+                value=""
+                type="text"
+                placeholder="Idade"
+                formControlName="age"
+              />
+            </mat-form-field>
+
+            <button mat-button type="button" (click)="removeChild(i)">
+              <mat-icon>remove</mat-icon>
+            </button>
+          </div>
+        </ng-container>
+      </div>
+      <button mat-raised-button color="primary" type="submit" class="btnAdd">
+        Adicionar funcionário
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>
