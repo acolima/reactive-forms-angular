@@ -11,6 +11,12 @@
           placeholder="Nome"
           formControlName="name"
         />
+        <mat-error *ngIf="clientForm.controls.name.hasError('required')">
+          Esse campo não pode ser vazio
+        </mat-error>
+        <mat-error *ngIf="clientForm.controls.name.hasError('minlength')">
+          Nome deve ter pelo menos 3 caracteres
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field>
@@ -21,6 +27,9 @@
           placeholder="Endereço"
           formControlName="address"
         />
+        <mat-error *ngIf="clientForm.controls.name.hasError('required')">
+          Esse campo não pode ser vazio
+        </mat-error>
       </mat-form-field>
 
       <div formArrayName="phones" class="phones">
@@ -44,7 +53,7 @@
           mat-raised-button
           type="button"
           color="primary"
-          (click)="addChild()"
+          (click)="addDependent()"
         >
           Adicionar dependente
         </button>
@@ -75,7 +84,13 @@
           </div>
         </ng-container>
       </div>
-      <button mat-raised-button color="primary" type="submit" class="btnAdd">
+      <button
+        [disabled]="!clientForm.valid"
+        mat-raised-button
+        color="primary"
+        type="submit"
+        class="btnAdd"
+      >
         Adicionar funcionário
       </button>
     </form>

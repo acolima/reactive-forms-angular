@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-form',
@@ -9,9 +15,9 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 export class FormComponent implements OnInit {
   // define um formGroup
   clientForm = this.fb.group({
-    name: [''], // define formControl - pode ser this.fb.control('')
-    address: [''],
-    phones: this.fb.array(['']), // define um formArray
+    name: ['', [Validators.required, Validators.minLength(3)]], // define formControl - pode ser this.fb.control('')
+    address: ['', [Validators.required]],
+    phones: this.fb.array([this.fb.control('', [Validators.required])]), // define um formArray
 
     // formArray com objeto
     // inicia vazio
@@ -35,18 +41,17 @@ export class FormComponent implements OnInit {
 
   addEmployee() {
     console.log(this.clientForm.value);
-    console.log(this.dependents.controls);
   }
 
   addPhone() {
-    this.phones.push(this.fb.control(''));
+    this.phones.push(this.fb.control('', [Validators.required]));
   }
 
-  addChild() {
+  addDependent() {
     this.dependents.push(
       this.fb.group({
-        name: [''],
-        age: [''],
+        name: ['', [Validators.required]],
+        age: ['', [Validators.min(0)]],
       })
     );
   }
